@@ -1,0 +1,101 @@
+﻿@model CommonModel
+@{
+    ViewData["Title"] = "Warp";
+}
+<style>
+    .btn-fw {
+        min-width: 100px !important
+    }
+</style>
+<div class="row">
+    <div class="col-sm-4 col-xl-4 stretch-card grid-margin"></div>
+    <div class="col-sm-4 col-xl-4 stretch-card grid-margin">
+
+        @using (Html.BeginForm("Index", "Warp", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.HiddenFor(a => a.ServiceType)
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">ส่งรูปขึ้นจอ</h4>
+                    <div class="form-group text-center">
+                        <button type="button" class="btn btn-inverse-danger btn-fw" onclick="moneyClick(this,99,'danger','1')"> 99 </button>
+                        <button type="button" class="btn btn-inverse-primary btn-fw" onclick="moneyClick(this,139,'primary','2')"> 139 </button>
+                        <button type="button" class="btn btn-inverse-secondary btn-fw" onclick="moneyClick(this,169,'secondary','3')"> 169 </button>
+                        <button type="button" class="btn btn-inverse-info btn-fw" onclick="moneyClick(this,149,'info','4')"> 149 </button>
+                        <button type="button" class="btn btn-inverse-info btn-fw" onclick="moneyClick(this,189,'info','5')"> 189 </button>
+                        <button type="button" class="btn btn-inverse-info btn-fw" onclick="moneyClick(this,219,'info','6')"> 219 </button>
+                        @Html.HiddenFor(a => a.PriceType)
+                        @Html.HiddenFor(a => a.Price)
+                    </div>
+                    <div class="form-group">
+                        <input type="file" class="form-control" name="imageData" id="imageData" />
+                        <img class="img-fluid w-100" src="~/img/default-image-icon-missing-picture-page-vector-40546530.jpg" id="blah" src="#" alt="your image" />
+                    </div>
+                    <div class="form-group template-demo d-flex justify-content-between flex-nowrap">
+                        <button type="button" class="btn btn-rounded btn-icon">
+                            <img class="social-img img-fluid w-100" src="~/img/instagram.svg" alt="" onclick="socialClick(this,'Instagram')" />
+                        </button>
+                        <button type="button" class="btn btn-icon">
+                            <img style="filter: grayscale(100%);" class="social-img img-fluid w-100" src="~/img/facebook.svg" alt="" onclick="socialClick(this,'Facebook')" />
+                        </button>
+                        <button type="button" class="btn btn-icon">
+                            <img style="filter: grayscale(100%);" class="social-img img-fluid w-100" src="~/img/twitter.svg" alt="" onclick="socialClick(this,'Twitter')" />
+                        </button>
+                        <button type="button" class="btn btn-icon">
+                            <img style="filter: grayscale(100%);" class="social-img img-fluid w-100" src="~/img/tiktok.svg" alt="" onclick="socialClick(this,'Tiktok')" />
+                        </button>
+                        <button type="button" class="btn btn-icon">
+                            <img style="filter: grayscale(100%);" class="social-img img-fluid w-100" src="~/img/onlyfans.svg" alt="" onclick="socialClick(this,'Onlyfans')" />
+                        </button>
+                        @Html.HiddenFor(a => a.SocialType)
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(a => a.SocialUsername,new {@class = "form-control", Style="padding-bottom:5px", placeholder="กรุณาใส่ชื่อไอจีของคุณ"})
+                    </div>
+                    <div class="form-group row  text-center">
+                        <div class="col-sm-6">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios1" value="" checked /> ส่งข้อความ
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(a => a.Message,new {@class = "form-control", Style="padding-bottom:5px", placeholder=""})
+                    </div>
+                    <div class="form-group text-center">
+                        <button type="submit" style="width:100%" class="btn btn-dark btn-lg btn-block"> ส่ง </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-sm-4 col-xl-4 stretch-card grid-margin"></div>
+
+</div>
+<script>
+    imageData.onchange = evt => {
+        const [file] = imageData.files
+        if (file) {
+            blah.src = URL.createObjectURL(file)
+        }
+    }
+    function socialClick(e, txt) {
+        $(".social-img").css("filter", "grayscale(1)");
+        
+        $(e).css("filter", "");
+
+        $("#warp").attr("placeholder", "กรุณาใส่ชื่อ " + txt + " ของคุณ");
+
+        document.getElementById('SocialType').value = txt;
+    }
+    function moneyClick(e, m, st, pt) {
+        document.getElementById('PriceType').value = pt;
+        document.getElementById('Price').value = m;
+
+        // $(e).removeClass("btn-inverse-" + st);
+        // $(e).addClass("btn-" + st);
+
+    }
+</script>
