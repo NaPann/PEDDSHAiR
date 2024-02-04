@@ -11,19 +11,19 @@
     <div class="col-sm-4 col-xl-4 stretch-card grid-margin"></div>
     <div class="col-sm-4 col-xl-4 stretch-card grid-margin">
 
-        @using (Html.BeginForm("Index", "Warp", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("Index", "Warp", FormMethod.Post, new { id= "form1", enctype = "multipart/form-data" }))
         {
             @Html.HiddenFor(a => a.ServiceType)
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">ส่งรูปขึ้นจอ</h4>
                     <div class="form-group text-center">
-                        <button type="button" class="btn btn-inverse-danger btn-fw" onclick="moneyClick(this,99,'danger','1')"> 99 </button>
-                        <button type="button" class="btn btn-inverse-primary btn-fw" onclick="moneyClick(this,139,'primary','2')"> 139 </button>
-                        <button type="button" class="btn btn-inverse-secondary btn-fw" onclick="moneyClick(this,169,'secondary','3')"> 169 </button>
-                        <button type="button" class="btn btn-inverse-info btn-fw" onclick="moneyClick(this,149,'info','4')"> 149 </button>
-                        <button type="button" class="btn btn-inverse-info btn-fw" onclick="moneyClick(this,189,'info','5')"> 189 </button>
-                        <button type="button" class="btn btn-inverse-info btn-fw" onclick="moneyClick(this,219,'info','6')"> 219 </button>
+                        <button type="button" class="btn btn-inverse-danger btn-fw" onclick="moneyClick(this,99,'danger','1')"> 40วินาที / 99 </button>
+                        <button type="button" class="btn btn-inverse-primary btn-fw" onclick="moneyClick(this,139,'primary','2')"> 60วินาที / 139 </button>
+                        <button type="button" class="btn btn-inverse-secondary btn-fw" onclick="moneyClick(this,169,'secondary','3')"> 80วินาที / 169 </button>
+                        @* <button type="button" class="btn btn-inverse-danger btn-fw" onclick="moneyClick(this,149,'danger','4')"> 40วินาที / 149 </button>
+                        <button type="button" class="btn btn-inverse-primary btn-fw" onclick="moneyClick(this,189,'primary','5')"> 60วินาที / 189 </button>
+                        <button type="button" class="btn btn-inverse-secondary btn-fw" onclick="moneyClick(this,219,'secondary','6')"> 80วินาที / 219 </button> *@
                         @Html.HiddenFor(a => a.PriceType)
                         @Html.HiddenFor(a => a.Price)
                     </div>
@@ -65,7 +65,7 @@
                         @Html.TextBoxFor(a => a.Message,new {@class = "form-control", Style="padding-bottom:5px", placeholder=""})
                     </div>
                     <div class="form-group text-center">
-                        <button type="submit" style="width:100%" class="btn btn-dark btn-lg btn-block"> ส่ง </button>
+                        <button type="button" style="width:100%" onclick="Submit_click()" class="btn btn-dark btn-lg btn-block"> ส่ง </button>
                     </div>
                 </div>
             </div>
@@ -97,5 +97,8 @@
         // $(e).removeClass("btn-inverse-" + st);
         // $(e).addClass("btn-" + st);
 
+    }
+    function Submit_click() { 
+        document.getElementById('form1').submit();
     }
 </script>

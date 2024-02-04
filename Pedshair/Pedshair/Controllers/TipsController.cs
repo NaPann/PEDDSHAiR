@@ -26,11 +26,11 @@ namespace Pedshair.Controllers
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                var sql = "INSERT INTO [dbo].[tbl_service_request] ([ServiceType],[PriceType],[Price],[SocialType],[SocialUsername],[Message],[CreatedDateTime],[CreatedBy]) VALUES (@ServiceType,@PriceType,@Price,@SocialType,@SocialUsername,@Message,GETDATE(),@CreatedBy)";
+                var sql = "INSERT INTO [dbo].[tbl_service_request] ([ServiceType],[PriceType],[Price],[SocialType],[SocialUsername],[MessageType],[Message],[CreatedDateTime],[CreatedBy]) VALUES (@ServiceType,@PriceType,@Price,@SocialType,@SocialUsername,@MessageType,@Message,GETDATE(),@CreatedBy)";
                 var rowsAffected = connection.Execute(sql, model);
             }
 
-            return View(new CommonModel());
+            return RedirectToAction("Index", "Home");
         }
     }
 }
