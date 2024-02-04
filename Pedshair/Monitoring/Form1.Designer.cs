@@ -68,7 +68,6 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pbImage.BackColor = System.Drawing.Color.Transparent;
-            this.pbImage.Image = global::Monitoring.Properties.Resources._5513058;
             this.pbImage.InitialImage = ((System.Drawing.Image)(resources.GetObject("pbImage.InitialImage")));
             this.pbImage.Location = new System.Drawing.Point(511, 113);
             this.pbImage.Name = "pbImage";
@@ -91,8 +90,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.BackgroundImage = global::Monitoring.Properties.Resources._5513058;
+            this.BackColor = System.Drawing.Color.IndianRed;
             this.ClientSize = new System.Drawing.Size(1060, 829);
             this.Controls.Add(this.pbImage);
             this.Controls.Add(this.lblMessage);
