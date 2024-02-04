@@ -41,9 +41,9 @@
             this.lblSocialUsername.BackColor = System.Drawing.Color.Transparent;
             this.lblSocialUsername.Font = new System.Drawing.Font("Arial", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSocialUsername.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblSocialUsername.Location = new System.Drawing.Point(79, 37);
+            this.lblSocialUsername.Location = new System.Drawing.Point(79, 245);
             this.lblSocialUsername.Name = "lblSocialUsername";
-            this.lblSocialUsername.Size = new System.Drawing.Size(329, 187);
+            this.lblSocialUsername.Size = new System.Drawing.Size(426, 187);
             this.lblSocialUsername.TabIndex = 1;
             this.lblSocialUsername.Text = ".......";
             // 
@@ -53,23 +53,23 @@
             this.lblMessage.BackColor = System.Drawing.Color.Transparent;
             this.lblMessage.Font = new System.Drawing.Font("Arial", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMessage.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblMessage.Location = new System.Drawing.Point(73, 267);
+            this.lblMessage.Location = new System.Drawing.Point(81, 489);
             this.lblMessage.Name = "lblMessage";
-            this.lblMessage.Size = new System.Drawing.Size(335, 170);
+            this.lblMessage.Size = new System.Drawing.Size(424, 170);
             this.lblMessage.TabIndex = 2;
             this.lblMessage.Text = ".........";
             // 
             // pbImage
             // 
-            this.pbImage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.pbImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pbImage.BackColor = System.Drawing.Color.Transparent;
-            this.pbImage.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pbImage.Image = global::Monitoring.Properties.Resources._5513058;
             this.pbImage.InitialImage = ((System.Drawing.Image)(resources.GetObject("pbImage.InitialImage")));
-            this.pbImage.Location = new System.Drawing.Point(414, 37);
+            this.pbImage.Location = new System.Drawing.Point(511, 113);
             this.pbImage.Name = "pbImage";
-            this.pbImage.Size = new System.Drawing.Size(340, 400);
+            this.pbImage.Size = new System.Drawing.Size(503, 583);
             this.pbImage.TabIndex = 0;
             this.pbImage.TabStop = false;
             // 
@@ -78,8 +78,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.BackgroundImage = global::Monitoring.Properties.Resources.messageImage_1707035615860;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.BackgroundImage = global::Monitoring.Properties.Resources._5513058;
+            this.ClientSize = new System.Drawing.Size(1060, 829);
             this.Controls.Add(this.lblMessage);
             this.Controls.Add(this.lblSocialUsername);
             this.Controls.Add(this.pbImage);
