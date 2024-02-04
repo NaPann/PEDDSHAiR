@@ -28,6 +28,10 @@ namespace Monitoring
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            pbImage.BackColor = Color.FromArgb(100, 88, 44, 55);
+            lblSocialUsername.BackColor = Color.FromArgb(100, 88, 44, 55);
+            lblMessage.BackColor = Color.FromArgb(100, 88, 44, 55);
+            panel1.BackColor = Color.FromArgb(100, 88, 44, 55);
             MainTimer.Interval = (5 * 1000);
             MainTimer.Tick += new EventHandler(MyTimer_Tick);
             MainTimer.Start();
@@ -68,6 +72,7 @@ namespace Monitoring
                 {
                     pbImage.Image = pbImage.InitialImage;
                     pbImage.SizeMode = PictureBoxSizeMode.Normal;
+                    pbImage.BackColor = Color.FromArgb(100, 88, 44, 55);
                     lblMessage.Text = "";
                     lblSocialUsername.Text = "";
                     MainTimer.Interval = (5 * 1000);
