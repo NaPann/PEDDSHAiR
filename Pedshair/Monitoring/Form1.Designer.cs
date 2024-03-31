@@ -38,71 +38,74 @@
             // 
             // lblSocialUsername
             // 
-            this.lblSocialUsername.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblSocialUsername.AutoSize = true;
+            this.lblSocialUsername.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblSocialUsername.BackColor = System.Drawing.Color.Transparent;
-            this.lblSocialUsername.Font = new System.Drawing.Font("Arial", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSocialUsername.Font = new System.Drawing.Font("Sarabun SemiBold", 60F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSocialUsername.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblSocialUsername.Location = new System.Drawing.Point(79, 245);
+            this.lblSocialUsername.Location = new System.Drawing.Point(70, 87);
             this.lblSocialUsername.Name = "lblSocialUsername";
-            this.lblSocialUsername.Size = new System.Drawing.Size(156, 72);
+            this.lblSocialUsername.Size = new System.Drawing.Size(530, 187);
             this.lblSocialUsername.TabIndex = 1;
             this.lblSocialUsername.Text = ".......";
+            this.lblSocialUsername.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // lblMessage
             // 
-            this.lblMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblMessage.AutoSize = true;
+            this.lblMessage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblMessage.BackColor = System.Drawing.Color.Transparent;
-            this.lblMessage.Font = new System.Drawing.Font("Arial", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMessage.Font = new System.Drawing.Font("Sarabun Light", 45F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMessage.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblMessage.Location = new System.Drawing.Point(81, 489);
+            this.lblMessage.Location = new System.Drawing.Point(71, 366);
             this.lblMessage.Name = "lblMessage";
-            this.lblMessage.Size = new System.Drawing.Size(141, 55);
+            this.lblMessage.Size = new System.Drawing.Size(529, 209);
             this.lblMessage.TabIndex = 2;
             this.lblMessage.Text = ".........";
+            this.lblMessage.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // pbImage
             // 
-            this.pbImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.pbImage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pbImage.BackColor = System.Drawing.Color.Transparent;
             this.pbImage.InitialImage = ((System.Drawing.Image)(resources.GetObject("pbImage.InitialImage")));
-            this.pbImage.Location = new System.Drawing.Point(511, 113);
+            this.pbImage.Location = new System.Drawing.Point(606, 26);
             this.pbImage.Name = "pbImage";
-            this.pbImage.Size = new System.Drawing.Size(503, 583);
+            this.pbImage.Size = new System.Drawing.Size(558, 652);
+            this.pbImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pbImage.TabIndex = 0;
             this.pbImage.TabStop = false;
             // 
             // panel1
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.BackColor = System.Drawing.SystemColors.Control;
-            this.panel1.Location = new System.Drawing.Point(12, 83);
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1036, 655);
+            this.panel1.Size = new System.Drawing.Size(1181, 690);
             this.panel1.TabIndex = 3;
+            this.panel1.Visible = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.IndianRed;
-            this.ClientSize = new System.Drawing.Size(1060, 829);
+            this.BackgroundImage = global::Monitoring.Properties.Resources.bg;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(1181, 690);
+            this.ControlBox = false;
             this.Controls.Add(this.pbImage);
             this.Controls.Add(this.lblMessage);
             this.Controls.Add(this.lblSocialUsername);
             this.Controls.Add(this.panel1);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbImage)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

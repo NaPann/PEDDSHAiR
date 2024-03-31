@@ -127,5 +127,11 @@
   <ItemGroup>
     <None Include="Resources\151217150606-smalls-photography-by-david-jacobson.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PEDSHAiR_Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bg.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

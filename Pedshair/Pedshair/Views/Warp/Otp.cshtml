@@ -1,0 +1,108 @@
+﻿@model RegisterData
+@{
+	ViewData["Title"] = "Register";
+}
+<style>
+	.card {
+		background-color: transparent;
+	}
+
+	.form-control[readonly], .form-control:focus {
+		background-color: #30115e !important;
+	}
+</style>
+<div class="d-flex justify-content-center">
+	<div class="card stretch-card mb-0">
+		<div class=" card border-primary mb-0" style="max-width: 50rem;border-width: thick;
+    border-color: #6f42c1 !important;">
+			<div class="card-body">
+				<div class="form-group">
+					<input class="form-control" type="text" , Style="padding-bottom:5px;color: #fff" value="@Model.mobile" readonly/>
+				</div>
+				<div class="form-group">
+					<p class="text-center text-warning">Ref : @Model.reference</p>
+					<input class = "form-control" type="text", Style="padding-bottom:5px;color: #fff" id="entryOTP" placeholder="otp" maxlength = 5 />
+
+				</div>
+
+				<div class="my-2 text-center">
+					<button type="button" style="width:100%;font-size: 1em;" onclick="goOTP()" class="btn btn-primary btn-lg btn-block"> ส่ง OTP </button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<form id="otpForm">
+	<input type="hidden" asp-for="otp" />
+	<input type="hidden" asp-for="reference" />
+	<input type="hidden" asp-for="mobile" />
+</form>
+
+<script>
+	function goOTP() {
+		let _mobile = $("#mobile").val();
+		if (_mobile == "") {
+			Swal.fire({
+				text: "กรุณาป้อนข้อมูลเบอร์มือถือ !",
+				icon: "error"
+			});
+			return false;
+		}
+
+		if (_mobile.length != 10) {
+			Swal.fire({
+				text: "ข้อมูลเบอร์มือถือ ไม่ถูกต้อง !",
+				icon: "error"
+			});
+			return false;
+		}
+
+		let _otp = $("#entryOTP").val();
+		if (_otp == "") {
+			Swal.fire({
+				text: "กรุณาป้อนข้อมูล OTP !",
+				icon: "error"
+			});
+			return false;
+		}
+
+		let _ref = $("#reference").val();
+		if (reference == "") {
+			Swal.fire({
+				text: "ข้อมูลไม่ครบถ้วน (Ref.) !",
+				icon: "error"
+			});
+			return false;
+		}
+
+		$.ajax({
+			cache: false,
+			async: true,
+			type: "POST",
+			url: "@Url.Action("CheckOTP", "Warp")",
+			data: { mobile: _mobile, reference: _ref, otp: _otp },
+			success: function (data) {
+				if (data.status == "success") {
+					window.location = "@Url.Action("Index", "Warp")?mobile=" + _mobile;
+				} else {
+					Swal.fire({
+						text: "OTP ไม่ถูกต้อง !",
+						icon: "error"
+					});
+					return false;
+				}
+			},
+			error: function (err) {
+				swal.close();
+				Swal.fire({
+					text: 'Something went wrong',
+					icon: "error"
+				});
+			},
+			complete: function (data) {
+
+			}
+
+		});
+	}
+</script>

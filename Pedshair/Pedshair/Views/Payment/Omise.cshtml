@@ -1,0 +1,161 @@
+﻿@model PaymentData
+@{
+    
+}
+<style>
+    .card {
+        background-color: rgb(255 255 255 / 30%);
+    }
+
+    .btn-success {
+        background-color: #6f42c1;
+        border-color: #6f42c1;
+    }
+</style>
+<section id="basic-form-layouts">
+    <div class="row">
+        <div class="col-12 mx-auto">
+            <div class=" card border-primary mb-3" style="border-width: thick;
+    border-color: #6f42c1 !important;">
+                <div class="card-content card-deck text-center">
+                    <div class="card box-shadow">
+                        <div class="card-header" style="background-color: #8a5edb;">
+                            <h3 class="my-0 font-weight-bold text-white">Payment</h3>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="pricing-card-title text-danger">@Model.amount.ToString("#,0.00") <small class="text-dark">บาท</small></h1>
+                            <div class="mx-auto">
+                                <a href="javascript: void(0);">
+                                    <img src="" width="300" height="300" id="img_qr" style="display:none;border: 3px solid #0e3d67;" />
+                                </a>
+                            </div>
+                            <input type="hidden" id="chrg_id" />
+                            <button type="button" id="checkout-button" class="btn btn-lg  btn-success btn-glow mt-2" onclick="getOmiseId()">ชำระเงิน</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+@section Scripts {
+    <!-- Include card.js library -->
+    <script type="text/javascript" src="https://cdn.omise.co/omise.js"></script>
+    <script>
+
+        var _type = '@Model.pay_type';
+        var _amt = '@Model.amount';
+
+        function getOmiseId() {
+            Swal.fire({
+                title: 'Loading ..'
+            });
+            Swal.showLoading();
+
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "POST",
+                url: "@Url.Action("PostOmise", "Payment")",
+                data: { pay_type: _type, amount: _amt },
+                success: function (data) {
+                    //debugger
+                    //toastr.success('Post Payment Complated', 'Success!', { positionClass: 'toast-bottom-right', containerId: 'toast-bottom-right' });
+                    $("#img_qr").prop("src", data.qr);
+                    $("#chrg_id").val(data.chrg_id);
+                    $("#img_qr").show();
+
+                    $("#checkout-button").hide();
+
+                    //chkCompleted();
+
+                    Swal.close();
+                },
+                error: function (err) {
+                    $("#chrg_id").val('');
+                    toastr.error('Fail Try Again later', 'Warning!', { positionClass: 'toast-bottom-right', containerId: 'toast-bottom-right' });
+                },
+                complete: function (data) {
+                }
+            });
+        }
+        var interval;
+        function chkCompleted() {
+            let _id = $("#chrg_id").val();
+            if (_id != '') {
+                interval = setInterval(
+                    getCompleted, 5000
+                );
+            }
+        }
+
+        function getCompleted() {
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "POST",
+                url: "@Url.Action("GetCompleted", "Payment")",
+                data: { chrg_id: $("#chrg_id").val() },
+                success: function (data) {
+                    //debugger
+                    if (data.status == "ok") {
+                        if (data.x == "y") {
+                            clearInterval(interval);
+
+                            Swal.fire({
+                                title: 'Loading ..'
+                            });
+                            Swal.showLoading();
+
+                            //Post to Unlock
+                            $.ajax({
+                                cache: false,
+                                async: true,
+                                type: "POST",
+                                url: "@Url.Action("PostPayment", "Payment")",
+                                data: { branch: _brn, rateType: _type, amount: _amt, chrg_id: $("#chrg_id").val() },
+                                success: function (data) {
+                                    //debugger
+                                    if (data.status == "ok") {
+                                        toastr.success('Payment Received : Thank you', 'Success!', { positionClass: 'toast-bottom-right', containerId: 'toast-bottom-right' });
+                                        Swal.close();
+
+                                        setTimeout(goNextPage, 3000);
+                                    } else {
+                                        toastr.error('Fail' + data.mess, 'Warning!', { positionClass: 'toast-bottom-right', containerId: 'toast-bottom-right' });
+                                    }
+                                },
+                                error: function (err) {
+                                    $("#chrg_id").val('');
+                                    toastr.error('Fail Try Again later', 'Warning!', { positionClass: 'toast-bottom-right', containerId: 'toast-bottom-right' });
+                                },
+                                complete: function (data) {
+                                }
+                            });
+
+                        } else {
+                            console.log(data);
+                        }
+                    } else {
+                        toastr.error('Fail ' + data.mess, 'Warning!', { positionClass: 'toast-bottom-right', containerId: 'toast-bottom-right' });
+                    }
+                },
+                error: function (err) {
+                    $("#chrg_id").val('');
+                    toastr.error('Fail Try Again later', 'Warning!', { positionClass: 'toast-bottom-right', containerId: 'toast-bottom-right' });
+                },
+                complete: function (data) {
+                }
+            });
+        }
+
+        function goNextPage() {
+
+            window.location = "@Url.Action("Login","Account")";
+
+        }
+
+    </script>
+    }

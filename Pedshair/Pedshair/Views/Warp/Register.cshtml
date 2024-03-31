@@ -1,0 +1,76 @@
+﻿@model RegisterData 
+@{
+    ViewData["Title"] = "Register";
+}
+<style>
+    .card {
+        background-color: transparent;
+	}
+
+	.form-control[readonly], .form-control:focus {
+		background-color: #30115e !important;
+	}
+</style>
+<div class="d-flex justify-content-center">
+        <div class="card stretch-card mb-0">
+            <div class=" card border-primary mb-0" style="max-width: 50rem;border-width: thick;
+    border-color: #6f42c1 !important;">
+                <div class="card-body">
+                    <div class="form-group">
+					@Html.TextBoxFor(a => a.mobile,new {@class = "form-control", type="number", Style="padding-bottom:5px;color: #fff", placeholder="เบอร์มือถือ", maxlength = 10})
+
+                    </div>
+                <div class="my-2 text-center">
+                    <button type="button" style="width:100%;font-size: 1em;" onclick="chkMobile()" class="btn btn-primary btn-lg btn-block"> ส่ง </button>
+                </div>
+                </div>
+            </div>
+        </div>
+   </div>
+
+<script>
+    function chkMobile() {
+		let _mobile = $("#mobile").val();
+		if (_mobile == "") {
+			Swal.fire({
+				text: "กรุณาป้อนข้อมูลเบอร์มือถือ !",
+				icon: "error"
+			});
+			return false;
+		}
+
+		if (_mobile.length != 10) {
+			Swal.fire({
+				text: "ข้อมูลเบอร์มือถือ ไม่ถูกต้อง !",
+				icon: "error"
+			});
+			return false;
+		}
+
+		$.ajax({
+			cache: false,
+			async: true,
+			type: "POST",
+			url: "@Url.Action("CheckMobile", "Warp")",
+			data: { mobile: _mobile },
+			success: function (data) {
+				if (data.status == "success") {
+					window.location = "@Url.Action("Index", "Warp")?mobile=" + _mobile;
+				} else {
+					window.location = "@Url.Action("Otp", "Warp")?mobile=" + _mobile;
+				}
+			},
+			error: function (err) {
+				swal.close();
+				Swal.fire({
+					text: 'Something went wrong',
+					icon: "error"
+				});
+			},
+			complete: function (data) {
+
+			}
+
+		});
+    }
+</script>

@@ -65,15 +65,22 @@ namespace Monitoring
                     var affectRow = await conn.ExecuteAsync(query);
                     
                     MainTimer.Start();
-
-
+                    pbImage.Visible = true;
+                    panel1.Visible = true;
+                    this.lblSocialUsername.Visible = true;
+                    this.lblMessage.Visible = true;
                 }
                 else
                 {
                     pbImage.SizeMode = PictureBoxSizeMode.Normal;
                     pbImage.BackColor = Color.FromArgb(85, 255, 255, 255);
+                    pbImage.Visible = false;
+                    pbImage.Image = null;
                     lblMessage.Text = "";
                     lblSocialUsername.Text = "";
+                    panel1.Visible = false;
+                    this.lblSocialUsername.Visible = false;
+                    this.lblMessage.Visible = false;
                     MainTimer.Interval = (5 * 1000);
                     MainTimer.Start();
                 }

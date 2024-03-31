@@ -2,13 +2,23 @@
 using Microsoft.AspNetCore.Mvc;
 using Pedshair.Models;
 using System.Data.SqlClient;
-using System.Net.Http.Headers;
-
+using Microsoft.Extensions.Configuration;
 namespace Pedshair.Controllers
 {
     public class WarpController : Controller
     {
-        public IActionResult Index()
+		private IConfiguration _config;
+		public WarpController(IConfiguration config)
+		{
+			_config = config;
+			connectionString = _config.GetValue<string>("ConnectionStrings");
+			senderSMS = _config.GetValue<string>("SMS:Sender");
+			userSMS = _config.GetValue<string>("SMS:User");
+			passSMS = _config.GetValue<string>("SMS:Pass");
+			messSMS = _config.GetValue<string>("SMS:Message");
+
+		}
+		public IActionResult Index()
         {
             var vm = new CommonModel();
             vm.ServiceType = "Warp";
@@ -16,13 +26,15 @@ namespace Pedshair.Controllers
             vm.SocialType = "Instagram";
             return View(vm);
         }
-
-        [HttpPost("warp/index")]
+        string connectionString = "";
+        string senderSMS = "";
+        string userSMS = "";
+        string passSMS = "";
+		string messSMS = "";
+		[HttpPost("warp/index")]
         public ActionResult Index(CommonModel model, IFormFile imageData)
         {
-            model.CreatedBy = "TEST";
-            var connectionString = "Data Source=202.44.230.90;Initial Catalog=PEDSHAIR_DB;User id=pedshair_user;Password=P@$$w0rd@321;";
-
+            model.CreatedBy = "System";
             long length = imageData.Length;
             if (length < 0)
                 return BadRequest();
@@ -47,5 +59,102 @@ namespace Pedshair.Controllers
 
             return RedirectToAction("Index","Home");
         }
-    }
+
+		//Register
+		public IActionResult Register()
+		{
+			var vm = new RegisterData();
+			return View(vm);
+		}
+        [HttpPost]
+        public IActionResult CheckMobile(string mobile)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                var _check = connection.Query<string>(@$"SELECT mobile FROM   log_otp
+WHERE (mobile = N'{mobile}') AND is_done = 1").FirstOrDefault();
+                if (_check != null)
+                {
+                    return Json(new { status = "success" });
+                }
+                else
+                {
+                    return Json(new { status = "error" });
+                }
+            }
+        }
+        public async Task<IActionResult> Otp(string mobile)
+        {
+            var vm = new RegisterData();
+            vm.mobile = mobile;
+            vm.reference = GenerateRandomAlphanumericString();
+            vm.otp = GenerateRandomOTP();
+
+            //create otp
+            var sql = @"INSERT INTO [dbo].[log_otp]
+           ([mobile]
+           ,[otp]
+           ,[reference]
+           ,[logdate]
+           ,[is_done])
+     VALUES
+           (@mobile
+           ,@otp
+           ,@reference
+           ,GETDATE()
+           ,0)";
+
+            SqlConnection connection = new SqlConnection(connectionString);
+            var rowsAffected = connection.Execute(sql, new { vm.mobile, vm.otp, vm.reference });
+
+			//SMS
+			HttpClient client = new HttpClient();
+			HttpResponseMessage response = await client.GetAsync(String.Format("https://www.thsms.com/api/rest?username={0}&password={1}&method=send&from={2}&to={3}&message={4}", userSMS, passSMS, senderSMS, mobile, messSMS
+                 + vm.otp + " (ref:" + vm.reference + ")"));
+			response.EnsureSuccessStatusCode();
+
+			// Deserialize the updated product from the response body.
+			var ret = await response.Content.ReadAsStringAsync();
+			return View(vm);
+        }
+		public static string GenerateRandomAlphanumericString(int length = 5)
+		{
+			const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+			var random = new Random();
+			var randomString = new string(Enumerable.Repeat(chars, length)
+													.Select(s => s[random.Next(s.Length)]).ToArray());
+			return randomString;
+		}
+		public static string GenerateRandomOTP(int length = 5)
+		{
+			const string chars = "0123456789";
+
+			var random = new Random();
+			var randomString = new string(Enumerable.Repeat(chars, length)
+													.Select(s => s[random.Next(s.Length)]).ToArray());
+			return randomString;
+		}
+
+		public IActionResult CheckOTP(string mobile, string reference, string otp)
+		{
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				var _check = connection.Query<string>(@$"SELECT top(1) mobile  FROM   log_otp
+WHERE mobile = N'{mobile}' AND is_done = 0 AND otp = '{otp}' AND reference = '{reference}'").FirstOrDefault();
+				if (_check != null)
+				{
+					//Correct
+					var sql = @$"UPDATE [dbo].[log_otp]
+   SET [is_done] = 1 WHERE mobile = @mobile AND otp = @otp AND reference = @reference";
+					var rowsAffected = connection.Execute(sql, new { mobile, otp, reference });
+					return Json(new { status = "success" });
+				}
+				else
+				{
+					return Json(new { status = "error" });
+				}
+			}
+		}
+	}
 }

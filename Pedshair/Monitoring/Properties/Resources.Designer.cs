@@ -83,6 +83,16 @@ namespace Monitoring.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap bg {
+            get {
+                object obj = ResourceManager.GetObject("bg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap facebook {
             get {
                 object obj = ResourceManager.GetObject("facebook", resourceCulture);
@@ -167,6 +177,16 @@ namespace Monitoring.Properties {
         internal static System.Drawing.Bitmap messageImage_1707035615860 {
             get {
                 object obj = ResourceManager.GetObject("messageImage_1707035615860", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PEDSHAiR_Logo {
+            get {
+                object obj = ResourceManager.GetObject("PEDSHAiR_Logo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
