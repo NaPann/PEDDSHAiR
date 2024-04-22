@@ -25,5 +25,19 @@
     {
         public decimal amount { get; set; }
         public string   pay_type { get; set; }
-    } 
+    }
+
+    public class PaymentPaySolutionData
+    {
+        public decimal total { get; set; }
+        public string customeremail { get; set; }
+        public string productdetail { get; set; }
+        public long refno { get; set; }
+        public int merchantid { get; set; }
+        public string cc { get; set; }
+
+        public string channel { get; set; }
+
+        public string postbackurl { get; set; }
+    }
 }

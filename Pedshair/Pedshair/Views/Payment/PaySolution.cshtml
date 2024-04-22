@@ -1,0 +1,177 @@
+﻿@model PaymentPaySolutionData
+@{
+
+}
+<style>
+    .card {
+        background-color: rgb(255 255 255 / 30%);
+    }
+
+    .btn-success {
+        background-color: #6f42c1;
+        border-color: #6f42c1;
+    }
+</style>
+<section id="basic-form-layouts">
+    <div class="row">
+        <div class="col-12 mx-auto">
+            <div class=" card border-primary mb-3" style="border-width: thick;
+    border-color: #6f42c1 !important;">
+
+                <form method="post" action="https://www.thaiepay.com/epaylink/payment.aspx" id="formPS">
+                    <div class="card-content card-deck text-center">
+                        <div class="card box-shadow">
+                            <div class="card-header" style="background-color: #8a5edb;">
+                                <h3 class="my-0 font-weight-bold text-white">Payment</h3>
+                            </div>
+
+                            <input type="hidden" name="refno" value="@Model.refno">
+                            <input type="hidden" name="merchantid" value="@Model.merchantid">
+                            <input type="hidden" name="customeremail" value="@Model.customeremail">
+                            <input type="hidden" name="cc" value="@Model.cc">
+                            <input type="hidden" name="productdetail" value="@Model.productdetail">
+                            <input type="hidden" name="total" value="@Model.total.ToString("N2")">
+                            <input type="hidden" name="postbackurl" value="@Model.postbackurl">
+                            <br>
+                            <input type="submit" name="Submit" value="Confirm Order">
+
+                            <div class="card-body">
+                                <h1 class="pricing-card-title text-danger">@Model.total.ToString("N2") <small class="text-dark">บาท</small></h1>
+                                <div class="mx-auto">
+                                    <a href="javascript: void(0);">
+                                        <img src="" width="300" height="300" id="img_qr" style="display:none;border: 3px solid #0e3d67;" />
+                                    </a>
+                                </div>
+                                <input type="hidden" id="chrg_id" />
+                                @*            <button type="button" id="checkout-button" class="btn btn-lg  btn-success btn-glow mt-2" onclick="getPSId()">ชำระเงิน</button> *@
+                                <button type="submit" id="checkout-button" class="btn btn-lg  btn-success btn-glow mt-2">ชำระเงิน</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+@section Scripts {
+    <!-- Include card.js library -->
+    <script type="text/javascript" src="https://cdn.omise.co/omise.js"></script>
+    <script>
+
+        var _type = '';
+        var _amt = '';
+
+        function getPSId() {
+            Swal.fire({
+                title: 'Loading ..'
+            });
+            Swal.showLoading();
+
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "POST",
+                url: "@Url.Action("PostPS", "Payment")",
+                data: { pay_type: _type, amount: _amt },
+                success: function (data) {
+                    //debugger
+                    //toastr.success('Post Payment Complated', 'Success!', { positionClass: 'toast-bottom-right', containerId: 'toast-bottom-right' });
+                    $("#img_qr").prop("src", data.qr);
+                    $("#chrg_id").val(data.chrg_id);
+                    $("#img_qr").show();
+
+                    $("#checkout-button").hide();
+
+                    //chkCompleted();
+
+                    Swal.close();
+                },
+                error: function (err) {
+                    $("#chrg_id").val('');
+                    toastr.error('Fail Try Again later', 'Warning!', { positionClass: 'toast-bottom-right', containerId: 'toast-bottom-right' });
+                },
+                complete: function (data) {
+                }
+            });
+        }
+        var interval;
+        function chkCompleted() {
+            let _id = $("#chrg_id").val();
+            if (_id != '') {
+                interval = setInterval(
+                    getCompleted, 5000
+                );
+            }
+        }
+
+        function getCompleted() {
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "POST",
+                url: "@Url.Action("GetCompleted", "Payment")",
+                data: { chrg_id: $("#chrg_id").val() },
+                success: function (data) {
+                    //debugger
+                    if (data.status == "ok") {
+                        if (data.x == "y") {
+                            clearInterval(interval);
+
+                            Swal.fire({
+                                title: 'Loading ..'
+                            });
+                            Swal.showLoading();
+
+                            //Post to Unlock
+                            $.ajax({
+                                cache: false,
+                                async: true,
+                                type: "POST",
+                                url: "@Url.Action("PostPayment", "Payment")",
+                                data: { branch: _brn, rateType: _type, amount: _amt, chrg_id: $("#chrg_id").val() },
+                                success: function (data) {
+                                    //debugger
+                                    if (data.status == "ok") {
+                                        toastr.success('Payment Received : Thank you', 'Success!', { positionClass: 'toast-bottom-right', containerId: 'toast-bottom-right' });
+                                        Swal.close();
+
+                                        setTimeout(goNextPage, 3000);
+                                    } else {
+                                        toastr.error('Fail' + data.mess, 'Warning!', { positionClass: 'toast-bottom-right', containerId: 'toast-bottom-right' });
+                                    }
+                                },
+                                error: function (err) {
+                                    $("#chrg_id").val('');
+                                    toastr.error('Fail Try Again later', 'Warning!', { positionClass: 'toast-bottom-right', containerId: 'toast-bottom-right' });
+                                },
+                                complete: function (data) {
+                                }
+                            });
+
+                        } else {
+                            console.log(data);
+                        }
+                    } else {
+                        toastr.error('Fail ' + data.mess, 'Warning!', { positionClass: 'toast-bottom-right', containerId: 'toast-bottom-right' });
+                    }
+                },
+                error: function (err) {
+                    $("#chrg_id").val('');
+                    toastr.error('Fail Try Again later', 'Warning!', { positionClass: 'toast-bottom-right', containerId: 'toast-bottom-right' });
+                },
+                complete: function (data) {
+                }
+            });
+        }
+
+        function goNextPage() {
+
+            window.location = "@Url.Action("Login", "Account")";
+
+        }
+
+    </script>
+}

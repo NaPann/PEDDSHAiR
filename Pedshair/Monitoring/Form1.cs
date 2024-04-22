@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Monitoring
 {
@@ -24,6 +25,11 @@ namespace Monitoring
         public Form1()
         {
             InitializeComponent();
+
+            string _qr = Properties.Settings.Default.URL;
+
+            Zen.Barcode.CodeQrBarcodeDraw qrcode = Zen.Barcode.BarcodeDrawFactory.CodeQr;
+            this.pmQR.Image = qrcode.Draw(_qr, 50);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -38,10 +44,10 @@ namespace Monitoring
         }
         private async void MyTimer_Tick(object sender, EventArgs e)
         {
-            var connectionString = "Data Source=202.44.230.90;Initial Catalog=PEDSHAIR_DB;User id=pedshair_user;Password=P@$$w0rd@321;";
+            var connectionString = Properties.Settings.Default.DBConnection;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                var queryData = @"SELECT Top (1) * FROM [PEDSHAIR_DB].[dbo].[tbl_service_request] where IsApprove <> 1 and IsPublish <> 1 and ServiceType <> 'Tips' order by CreatedDateTime asc;";
+                var queryData = @"SELECT Top (1) * FROM [PEDSHAIR_DB].[dbo].[tbl_service_request] where IsApprove <> 1 and IsPublish <> 1 and ServiceType <> 'Tips' AND [IsPaid] = 1 order by CreatedDateTime asc;";
 
                 var monitorDatas = conn.Query<CommonModel>(queryData).ToList();
 

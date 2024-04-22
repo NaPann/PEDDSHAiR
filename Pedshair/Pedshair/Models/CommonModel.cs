@@ -13,5 +13,7 @@
         public string? Image { get; set; }
         public DateTime CreatedDateTime { get; set; }
         public string? CreatedBy { get; set; }
+
+        public long refno { get; set; }
     }
 }

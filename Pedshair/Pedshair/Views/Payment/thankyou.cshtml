@@ -1,0 +1,56 @@
+﻿@model CommonModel
+@{
+    ViewData["Title"] = "Thank you";
+}
+<style>
+    .btn-fw {
+        min-width: 100px !important
+    }
+
+    .card.border-primary {
+        box-shadow: 0 0 8px #6f42c1, 0 0 4px rgba(111,66,193,.4), 0 0 1rem rgba(111,66,193,.3), 0 0 4rem rgba(111,66,193,.1);
+    }
+
+    .form-control {
+        background-color: unset;
+    }
+
+    .form-check .form-check-label {
+        color: #000;
+    }
+
+    .card {
+        background-color: transparent;
+    }
+
+    .form-group {
+        margin-bottom: .5rem;
+    }
+</style>
+
+<div class="d-flex justify-content-center border-3 border-white" onload="counting()">
+  <div class="text-center">
+        <h2 class="pt-2 text-white">Thank You .. ขอบคุณ</h2>
+        <br />
+        <span> <h3 class="pb-3 text-info">การชำระเสร็จเรียบร้อย<br /> กรุณารอรูปภาพของคุณ</h3></span>
+        <button type="button" class="btn fw-bold fs-5 btn-lg  btn-info mb-2">กลับหน้าหลัก</button><br />
+        <span class="pb-5 text-white">... กำลังกลับไปหน้าหลักอัตโนมัติ ...</></span>
+    </div> 
+  
+</div>
+<
+    @section Scripts {
+<script>
+
+    $(function () {
+        setTimeout(backToBase, 5000);
+    });
+
+
+    function backToBase() {
+        //debugger
+        window.location = '@Url.Action("Index","Home")';
+    }
+
+</script>
+    }

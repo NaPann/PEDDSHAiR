@@ -29,62 +29,63 @@
 </style>
 
 <div class="d-flex justify-content-center">
-        @using (Html.BeginForm("Index", "Warp", FormMethod.Post, new { id= "form1", enctype = "multipart/form-data" }))
-        {
-            @Html.HiddenFor(a => a.ServiceType)
-            <div class=" card border-primary mb-3" style="max-width: 50rem;border-width: thick;
+    @using (Html.BeginForm("Index", "Warp", FormMethod.Post, new { id = "form1", enctype = "multipart/form-data" }))
+    {
+        @Html.HiddenFor(a => a.ServiceType)
+        <div class=" card border-primary mb-3" style="max-width: 50rem;border-width: thick;
     border-color: #6f42c1 !important;">
-                <div class="card-body">
-                    <h4 class="text-center">ส่งรูปขึ้นจอ</h4>
+            <div class="card-body">
+                <h4 class="text-center">ส่งรูปขึ้นจอ</h4>
                 <div class="form-group text-center" style="background-color: black;">
-                    <button type="button" class="btn btn-inverse-danger btn-fw w-100" style="font-size: 1em;" onclick="moneyClick(this,99,'danger','1')"> 40วินาที / 99 </button>
+                    <button type="button" class="btn btn-inverse-danger btn-fw w-100" style="font-size: 1em;" onclick="moneyClick(this,1,'danger','1')"> 40วินาที / 1 </button>
                     <button type="button" class="btn btn-inverse-primary btn-fw w-100" style="font-size: 1em;" onclick="moneyClick(this,139,'primary','2')"> 60วินาที / 139 </button>
                     <button type="button" class="btn btn-inverse-secondary btn-fw w-100" style="font-size: 1em;" onclick="moneyClick(this,169,'secondary','3')"> 80วินาที / 169 </button>
-                        @* <button type="button" class="btn btn-inverse-danger btn-fw" onclick="moneyClick(this,149,'danger','4')"> 40วินาที / 149 </button>
-                        <button type="button" class="btn btn-inverse-primary btn-fw" onclick="moneyClick(this,189,'primary','5')"> 60วินาที / 189 </button>
-                        <button type="button" class="btn btn-inverse-secondary btn-fw" onclick="moneyClick(this,219,'secondary','6')"> 80วินาที / 219 </button> *@
-                        @Html.HiddenFor(a => a.PriceType)
-                        @Html.HiddenFor(a => a.Price)
-                    </div>
-                    <div class="form-group">
-                        <input type="file" class="form-control" name="imageData" id="imageData" />
-                        <img class="img-fluid w-100" src="~/img/default-image-icon-missing-picture-page-vector-40546530.jpg" id="blah" src="#" alt="your image" />
-                    </div>
-                    <div class="form-group template-demo d-flex justify-content-between flex-nowrap">
-                        <button type="button" class="btn btn-rounded btn-icon">
-                            <img class="social-img img-fluid w-100" src="~/img/instagram.svg" alt="" onclick="socialClick(this,'Instagram')" />
-                        </button>
-                        <button type="button" class="btn btn-icon">
-                            <img style="filter: grayscale(100%);" class="social-img img-fluid w-100" src="~/img/facebook.svg" alt="" onclick="socialClick(this,'Facebook')" />
-                        </button>
-                        <button type="button" class="btn btn-icon">
-                            <img style="filter: grayscale(100%);" class="social-img img-fluid w-100" src="~/img/twitter.svg" alt="" onclick="socialClick(this,'Twitter')" />
-                        </button>
-                        <button type="button" class="btn btn-icon">
-                            <img style="filter: grayscale(100%);" class="social-img img-fluid w-100" src="~/img/tiktok.svg" alt="" onclick="socialClick(this,'Tiktok')" />
-                        </button>
-                        <button type="button" class="btn btn-icon">
-                            <img style="filter: grayscale(100%);" class="social-img img-fluid w-100" src="~/img/onlyfans.svg" alt="" onclick="socialClick(this,'Onlyfans')" />
-                        </button>
-                        @Html.HiddenFor(a => a.SocialType)
-                    </div>
-                    <div class="form-group">
-                        @Html.TextBoxFor(a => a.SocialUsername,new {@class = "form-control", Style="padding-bottom:5px", placeholder="กรุณาใส่ชื่อไอจีของคุณ"})
-                    </div>
-                    <div class="form-group row text-center pt-2">
+                    @* <button type="button" class="btn btn-inverse-danger btn-fw" onclick="moneyClick(this,149,'danger','4')"> 40วินาที / 149 </button>
+                <button type="button" class="btn btn-inverse-primary btn-fw" onclick="moneyClick(this,189,'primary','5')"> 60วินาที / 189 </button>
+                <button type="button" class="btn btn-inverse-secondary btn-fw" onclick="moneyClick(this,219,'secondary','6')"> 80วินาที / 219 </button> *@
+                    @Html.HiddenFor(a => a.PriceType)
+                    @Html.HiddenFor(a => a.Price)
+                    @Html.HiddenFor(a => a.CreatedBy)
+                </div>
+                <div class="form-group">
+                    <input type="file" class="form-control" name="imageData" id="imageData" />
+                    <img class="img-fluid w-100" src="~/img/default-image-icon-missing-picture-page-vector-40546530.jpg" id="blah" src="#" alt="your image" />
+                </div>
+                <div class="form-group template-demo d-flex justify-content-between flex-nowrap">
+                    <button type="button" class="btn btn-rounded btn-icon">
+                        <img class="social-img img-fluid w-100" src="~/img/instagram.svg" alt="" onclick="socialClick(this,'Instagram')" />
+                    </button>
+                    <button type="button" class="btn btn-icon">
+                        <img style="filter: grayscale(100%);" class="social-img img-fluid w-100" src="~/img/facebook.svg" alt="" onclick="socialClick(this,'Facebook')" />
+                    </button>
+                    <button type="button" class="btn btn-icon">
+                        <img style="filter: grayscale(100%);" class="social-img img-fluid w-100" src="~/img/twitter.svg" alt="" onclick="socialClick(this,'Twitter')" />
+                    </button>
+                    <button type="button" class="btn btn-icon">
+                        <img style="filter: grayscale(100%);" class="social-img img-fluid w-100" src="~/img/tiktok.svg" alt="" onclick="socialClick(this,'Tiktok')" />
+                    </button>
+                    <button type="button" class="btn btn-icon">
+                        <img style="filter: grayscale(100%);" class="social-img img-fluid w-100" src="~/img/onlyfans.svg" alt="" onclick="socialClick(this,'Onlyfans')" />
+                    </button>
+                    @Html.HiddenFor(a => a.SocialType)
+                </div>
+                <div class="form-group">
+                    @Html.TextBoxFor(a => a.SocialUsername, new { @class = "form-control", Style = "padding-bottom:5px", placeholder = "กรุณาใส่ชื่อไอจีของคุณ" })
+                </div>
+                <div class="form-group row text-center pt-2">
                     <h5>ข้อความ</h5>
-                    </div>
-                    <div class="form-group">
-                        @Html.TextBoxFor(a => a.Message,new {@class = "form-control", Style="padding-bottom:5px", placeholder=""})
-                    </div>
-                    <div class="form-group text-center">
-                        <button type="button" style="width:100%" onclick="Submit_click()" class="btn btn-primary btn-lg btn-block"> ส่ง </button>
-                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.TextBoxFor(a => a.Message, new { @class = "form-control", Style = "padding-bottom:5px", placeholder = "" })
+                </div>
+                <div class="form-group text-center">
+                    <button type="submit" style="width:100%" onclick="Submit_click()" class="btn btn-primary btn-lg btn-block"> ส่ง </button>
                 </div>
             </div>
-        }
-    </div>
-    <div class="col-sm-4 col-xl-4 stretch-card grid-margin"></div>
+        </div>
+    }
+</div>
+<div class="col-sm-4 col-xl-4 stretch-card grid-margin"></div>
 <script>
     imageData.onchange = evt => {
         const [file] = imageData.files
@@ -94,7 +95,7 @@
     }
     function socialClick(e, txt) {
         $(".social-img").css("filter", "grayscale(1)");
-        
+
         $(e).css("filter", "");
 
         $("#warp").attr("placeholder", "กรุณาใส่ชื่อ " + txt + " ของคุณ");
@@ -105,9 +106,9 @@
         document.getElementById('PriceType').value = pt;
         document.getElementById('Price').value = m;
 
-        window.location = '@Url.Action("Omise", "Payment")?amt=' + m + "&pay_type=" + pt;
+        //window.location = '@Url.Action("PaySolution", "Payment")?amt=' + m + "&pay_type=" + pt;
     }
-    function Submit_click() { 
+    function Submit_click() {
         document.getElementById('form1').submit();
     }
 

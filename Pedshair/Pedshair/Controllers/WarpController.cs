@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pedshair.Models;
 using System.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using System.Diagnostics.Eventing.Reader;
 namespace Pedshair.Controllers
 {
     public class WarpController : Controller
@@ -18,12 +19,13 @@ namespace Pedshair.Controllers
 			messSMS = _config.GetValue<string>("SMS:Message");
 
 		}
-		public IActionResult Index()
+		public IActionResult Index(string mobile)
         {
             var vm = new CommonModel();
             vm.ServiceType = "Warp";
             vm.MessageType = "ส่งข้อความ";
             vm.SocialType = "Instagram";
+            vm.CreatedBy = mobile;
             return View(vm);
         }
         string connectionString = "";
@@ -34,7 +36,7 @@ namespace Pedshair.Controllers
 		[HttpPost("warp/index")]
         public ActionResult Index(CommonModel model, IFormFile imageData)
         {
-            model.CreatedBy = "System";
+            //model.CreatedBy = "System";
             long length = imageData.Length;
             if (length < 0)
                 return BadRequest();
@@ -51,13 +53,16 @@ namespace Pedshair.Controllers
                 }
             }
 
+            model.refno = long.Parse(DateTime.Now.ToString("yyMMddHHmmss", new System.Globalization.CultureInfo("en-us")));
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                var sql = "INSERT INTO [dbo].[tbl_service_request] ([ServiceType],[PriceType],[Price],[SocialType],[SocialUsername],[MessageType],[Message],[Image],[CreatedDateTime],[CreatedBy]) VALUES (@ServiceType,@PriceType,@Price,@SocialType,@SocialUsername,@MessageType,@Message,@Image,GETDATE(),@CreatedBy)";
+                var sql = "INSERT INTO [dbo].[tbl_service_request] ([ServiceType],[PriceType],[Price],[SocialType],[SocialUsername],[MessageType],[Message],[Image],[CreatedDateTime],[CreatedBy],IsPaid,refno) VALUES (@ServiceType,@PriceType,@Price,@SocialType,@SocialUsername,@MessageType,@Message,@Image,GETDATE(),@CreatedBy,0,@refno)";
                 var rowsAffected = connection.Execute(sql, model);
             }
 
-            return RedirectToAction("Index","Home");
+            // return RedirectToAction("Index","Home");
+            return RedirectToAction("PaySolution", "Payment", new { amt = model.Price, pay_type = "promtpay", refno = model.refno });
         }
 
 		//Register
